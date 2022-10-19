@@ -14,6 +14,9 @@ export CXXFLAGS="$CXXFLAGS -DFOLLY_HAVE_CLOCK_GETTIME=1"
 # Resolves error invalid conversion from 'void (*)() noexcept' to 'google::logging_fail_func_t' {aka 'void (*)() __attribute__((noreturn))'}
 export CXXFLAGS="$CXXFLAGS -fpermissive"
 
+# Enable sse4.2
+export CXXFLAGS="$CXXFLAGS -mavx2 -mfma -mavx -mf16c -mlzcnt -std=c++17 -mbmi2"
+
 mkdir -p _build
 cd _build
 
@@ -24,7 +27,7 @@ else
     CMAKE_ARGS="${CMAKE_ARGS} -DENABLE_JEMALLOC=OFF"
 fi
 
-cmake ${CMAKE_ARGS} -Wno-dev -GNinja -DBUILD_SHARED_LIBS=ON ..
+cmake ${CMAKE_ARGS} -Wno-dev -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON ..
 
 cmake --build . --parallel
 

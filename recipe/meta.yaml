@@ -1,7 +1,7 @@
-{% set version = "2022.09.19.00" %}  # PEP 386
+{% set version = "2022.07.11.00" %}  # PEP 386
 {% set jemalloc_enabled = folly_build_ext is not undefined and folly_build_ext == "jemalloc" %}
 ### IMPORTANT: always keep the build number in build_string and in build/number equal!
-{% set build_string = "h{}_1".format(PKG_HASH) %}
+{% set build_string = "h{}_5".format(PKG_HASH) %}
 {% set build_string_ext = "{}_jemalloc".format(build_string) if jemalloc_enabled else build_string  %}
 
 package:
@@ -10,10 +10,10 @@ package:
 
 source:
   url: https://github.com/facebook/folly/archive/v{{ version }}.tar.gz
-  sha256: 0aee963cd5da8db7be7cc8e03f7a8bcaa2a320ab1b209b3cd2644bfa6b60f0ca
+  sha256: b6cc4082afd1530fdb8d759bc3878c1ea8588f6d5bc9eddf8e1e8abe63f41735
 
 build:
-  number: 0
+  number: 5
   skip: true  # [not linux64]
   string: {{ build_string_ext }}
   ignore_run_exports:
@@ -27,7 +27,7 @@ requirements:
   host:
     - boost-cpp
     - double-conversion
-    - fmt
+    - fmt 8.0.1
     - gflags
     - glog
     - jemalloc  # [folly_build_ext is not undefined and folly_build_ext == "jemalloc"]
@@ -35,7 +35,7 @@ requirements:
     - libevent
     - libsodium
     # snappy 1.1.9 breaks linking with folly, see https://github.com/facebook/folly/issues/1606
-    - snappy 1.1.8
+    - snappy 1.1.9
     - bzip2
     - lz4-c
     - openssl
@@ -45,7 +45,7 @@ requirements:
   run:
     - boost-cpp
     - jemalloc  # [folly_build_ext is not undefined and folly_build_ext == "jemalloc"]
-    - snappy 1.1.8
+    - snappy 1.1.9
 
 test:
   requires:
